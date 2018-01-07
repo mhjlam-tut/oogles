@@ -1,4 +1,4 @@
-#include "sb7.h"
+#include "include/sb7.h"
 #include <cmath>
 
 class application : public sb7::application
