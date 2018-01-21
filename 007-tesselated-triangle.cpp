@@ -26,48 +26,49 @@ public:
 
 		static const GLchar* tcs_source[] = // tesselation control shader
 		{
-			"#version 450 core																\n"
-			"																				\n"
-			"layout (vertices = 3) out;														\n"
-			"																				\n"
-			"void main()																	\n"
-			"{																				\n"
-			"	if (gl_InvocationID == 0)													\n"
-			"	{																			\n"
-			"		gl_TessLevelInner[0] = 5.0;												\n"
-			"		gl_TessLevelOuter[0] = 5.0;												\n"
-			"		gl_TessLevelOuter[1] = 5.0;												\n"
-			"		gl_TessLevelOuter[2] = 5.0;												\n"
-			"	}																			\n"
-			"																				\n"
-			"	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;	\n"
-			"}																				\n"
+			"#version 450 core													\n"
+			"																	\n"
+			"layout (vertices = 3) out;											\n"
+			"																	\n"
+			"void main()														\n"
+			"{																	\n"
+			"	if (gl_InvocationID == 0)										\n"
+			"	{																\n"
+			"		gl_TessLevelInner[0] = 5.0;									\n"
+			"		gl_TessLevelOuter[0] = 5.0;									\n"
+			"		gl_TessLevelOuter[1] = 5.0;									\n"
+			"		gl_TessLevelOuter[2] = 5.0;									\n"
+			"	}																\n"
+			"																	\n"
+			"	gl_out[gl_InvocationID].gl_Position = 							\n"
+			"		gl_in[gl_InvocationID].gl_Position;							\n"
+			"}																	\n"
 		};
 
 		static const GLchar* tes_source[] = // tesselation evaluation shader
 		{
-			"#version 450 core												\n"
-			"																\n"
-			"layout (triangles, equal_spacing, cw) in;						\n"
-			"																\n"
-			"void main()													\n"
-			"{																\n"
-			"	gl_Position =	(gl_TessCoord.x * gl_in[0].gl_Position) +	\n"
-			"					(gl_TessCoord.y * gl_in[1].gl_Position) +	\n"
-			"					(gl_TessCoord.z * gl_in[2].gl_Position);	\n"
-			"}																\n"
+			"#version 450 core													\n"
+			"																	\n"
+			"layout (triangles, equal_spacing, cw) in;							\n"
+			"																	\n"
+			"void main()														\n"
+			"{																	\n"
+			"	gl_Position =	(gl_TessCoord.x * gl_in[0].gl_Position) +		\n"
+			"					(gl_TessCoord.y * gl_in[1].gl_Position) +		\n"
+			"					(gl_TessCoord.z * gl_in[2].gl_Position);		\n"
+			"}																	\n"
 		};
 
 		static const GLchar* fs_source[] = // fragment shader
 		{
-			"#version 450 core						\n"
-			"										\n"
-			"out vec4 color;						\n"
-			"										\n"
-			"void main()							\n"
-			"{										\n"
-			"	color = vec4(1, 1, 1, 1);			\n"
-			"}										\n"
+			"#version 450 core													\n"
+			"																	\n"
+			"out vec4 color;													\n"
+			"																	\n"
+			"void main()														\n"
+			"{																	\n"
+			"	color = vec4(1, 1, 1, 1);										\n"
+			"}																	\n"
 		};
 
 		GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -107,11 +108,11 @@ public:
 
 	void render(double currentTime)
 	{
-		const GLfloat clear_color[] = { 0.25f, 0.10f, 0.25f, 1.00f };
+		const GLfloat clear_color[] = { 0.25f, 0.25f, 0.25f, 1.00f };
 		glClearBufferfv(GL_COLOR, 0, clear_color);
 
 		glUseProgram(program);
-		//glPatchParameteri(GL_PATCH_VERTICES, 3); // default behavior, can be omitted
+		glPatchParameteri(GL_PATCH_VERTICES, 3); // default behavior, can be omitted
 		glDrawArrays(GL_PATCHES, 0, 3);
 	}
 
